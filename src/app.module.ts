@@ -9,16 +9,24 @@ import { MessageProducerService } from './message.producer.service';
  
 @Module({
   imports: [
-    BullModule.forRoot({
+    BullModule.forRoot('first-queue',{
       redis: {
         host: 'localhost',
-        port: 5003,
+        port: 5008,
+      },
+    }),
+    BullModule.forRoot('second-queue',{
+      redis: {
+        host: 'localhost',
+        port: 5008,
       },
     }),
     BullModule.registerQueue({
+      configKey:  'first-queue',
       name:'message-queue'
     },
-    {
+    { 
+      configKey: 'second-queue',
       name: 'file-operation-queue',
     })
   ],
